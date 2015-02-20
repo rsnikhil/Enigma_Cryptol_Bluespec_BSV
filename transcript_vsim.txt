@@ -1,0 +1,52 @@
+$ make rtl
+Compiling to Verilog ...
+bsc -u -elab -verilog -vdir verilog  -bdir build_v  -info-dir build_v -keep-fires -aggressive-conditions -no-warn-action-shadowing -steps-warn-interval 250000 -p .:./src_BSV:%/Prelude:%/Libraries src_BSV/Tb.bsv
+checking package dependencies
+compiling ./src_BSV/Enigma.bsv
+Warning: "src_BSV/Enigma.bsv", line 57, column 10: (T0127)
+  Exporting orphan typeclass instance StringLiteral#(Vector::Vector#(n,
+  Bit#(8))). The instance's typeclass as well as all of the instance's source
+  type parameters are defined in other packages. This can lead to confusing
+  and inconsistent instance resolution if the orphan instance is not imported
+  everywhere it could be used.
+compiling ./src_BSV/HW_Enigma.bsv
+code generation for mkModelEnigma starts
+Verilog file created: verilog/mkModelEnigma.v
+Elaborated module file created: build_v/mkModelEnigma.ba
+compiling src_BSV/Tb.bsv
+code generation for mkTb starts
+Verilog file created: verilog/mkTb.v
+Elaborated module file created: build_v/mkTb.ba
+All packages are up to date.
+Compilation to Verilog finished
+
+
+
+$ make vlink
+Linking Verilog ...
+bsc -e mkTb -verilog -o vsim.exe -vdir verilog -vsim iverilog -keep-fires \
+		verilog/mkTb.v
+Verilog binary file created: vsim.exe
+Verilog linking finished
+$
+
+
+
+$ make vsim
+Simulating Verilog and generating VCD waveform file ...
+./vsim.exe  +bscvcd
+VCD info: dumpfile dump.vcd opened for output.
+Plaintext input:      ENIGMAWASAREALLYCOOLMACHINE
+
+Direct Cryptol-derived version
+Cipher text output:   UPEKTBSDROBVTUJGNCEHHGBXGTF
+Plaintext output:     ENIGMAWASAREALLYCOOLMACHINE
+
+HW version (sequential input/output of text
+Cipher text output:   UPEKTBSDROBVTUJGNCEHHGBXGTF
+Plaintext output:     ENIGMAWASAREALLYCOOLMACHINE
+Verilog simulation finished
+$
+$ ls -als dump.vcd
+544 -rw-r--r--  1 nikhil  staff  276459 Feb 17 13:11 dump.vcd
+$

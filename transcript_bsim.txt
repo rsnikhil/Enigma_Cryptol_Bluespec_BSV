@@ -1,0 +1,45 @@
+$ make compile
+Compiling for Bluesim ...
+bsc -u -sim -simdir build_bsim -bdir build -info-dir build -keep-fires -aggressive-conditions -no-warn-action-shadowing -steps-warn-interval 250000 -p .:./src_BSV:%/Prelude:%/Libraries src_BSV/Tb.bsv
+checking package dependencies
+compiling ./src_BSV/Enigma.bsv
+compiling ./src_BSV/HW_Enigma.bsv
+code generation for mkModelEnigma starts
+Elaborated module file created: build/mkModelEnigma.ba
+compiling src_BSV/Tb.bsv
+code generation for mkTb starts
+Elaborated module file created: build/mkTb.ba
+All packages are up to date.
+Compilation for Bluesim finished
+$
+
+
+$ make link
+Linking Bluesim...
+bsc -e mkTb -keep-fires -sim  -o ./bsim.exe  -simdir build_bsim -bdir build -info-dir build  -p .:./src_BSV:%/Prelude:%/Libraries
+Bluesim object created: build_bsim/mkTb.{h,o}
+Bluesim object created: build_bsim/mkModelEnigma.{h,o}
+Bluesim object created: build_bsim/model_mkTb.{h,o}
+Simulation shared library created: bsim.exe.so
+Simulation executable created: ./bsim.exe
+Bluesim linking finished
+$
+
+
+$ make bsim
+Simulating (Bluesim) and generating VCD waveform file ...
+./bsim.exe  -V bsim_waves.vcd
+Plaintext input:      ENIGMAWASAREALLYCOOLMACHINE
+
+Direct Cryptol-derived version
+Cipher text output:   UPEKTBSDROBVTUJGNCEHHGBXGTF
+Plaintext output:     ENIGMAWASAREALLYCOOLMACHINE
+
+HW version (sequential input/output of text
+Cipher text output:   UPEKTBSDROBVTUJGNCEHHGBXGTF
+Plaintext output:     ENIGMAWASAREALLYCOOLMACHINE
+Bluesim simulation finished
+$
+$ ls -als bsim_waves.vcd 
+552 -rw-r--r--  1 nikhil  staff  282215 Feb 17 13:15 bsim_waves.vcd
+$
