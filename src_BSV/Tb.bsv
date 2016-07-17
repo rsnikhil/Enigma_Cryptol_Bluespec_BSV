@@ -35,7 +35,9 @@ module mkTb (Empty);
    Reg #(int) rg_j2 <- mkRegU;
 
    mkAutoFSM (seq
-		 displayVCharB ("Plaintext input:      ", pt_input, "\n\n");
+		 $write ("Plaintext input:      ");
+		 displayVCharB (pt_input);
+		 $write ("\n\n");
 
 		 // ----------------------------------------------------------------
 		 $display ("Direct Cryptol-derived version");
@@ -43,17 +45,27 @@ module mkTb (Empty);
 		 // Encrypt
 		 action
 		    let ct = enigma  (modelEnigma, pt_input);
-		    displayVCharB ("Cipher text output:   ", ct, "\n");
-		    if (ct != ct_expected)
-		       displayVCharB ("Expected ciphertext:  ", ct_expected, "\n");
+		    $write ("Cipher text output:   ");
+		    displayVCharB (ct);
+		    $write ("\n");
+		    if (ct != ct_expected) begin
+		       $write ("Expected ciphertext:  ");
+		       displayVCharB (ct_expected);
+		       $write ("\n");
+		    end
 		 endaction
 
 		 // Decrypt
 		 action
 		    let pt_output = dEnigma (modelEnigma, ct_expected);
-		    displayVCharB ("Plaintext output:     ", pt_output, "\n");
-		    if (pt_output != pt_input)
-		       displayVCharB ("Expected plaintext:   ", pt_input, "\n");
+		    $write ("Plaintext output:     ");
+		    displayVCharB (pt_output);
+		    $write ("\n");
+		    if (pt_output != pt_input) begin
+		       $write ("Expected plaintext:   ");
+		       displayVCharB (pt_input);
+		       $write ("\n");
+		    end
 		 endaction
 
 		 // ----------------------------------------------------------------

@@ -59,12 +59,10 @@ function Vector #(n, CharB) stringToVCharB (String s);
 		    toVector (stringToCharList (s))));
 endfunction
 
-function Action displayVCharB (String pre, Vector #(n, CharB) vcharb, String post);
+function Action displayVCharB (Vector #(n, CharB) vcharb);
    action
-      $write ("%s", pre);
       for (Integer j = 0; j < valueOf (n); j = j + 1)
 	 $write ("%c", vcharb [j]);
-      $write ("%s", post);
    endaction
 endfunction   
 
